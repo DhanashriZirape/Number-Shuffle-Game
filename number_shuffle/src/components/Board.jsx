@@ -5,17 +5,22 @@ import {shuffle, checkTileMovability, formatTime} from '../utils/utils';
 import Header from './Header';
  
 const Tiles = styled.div`
-width: 15%;
 display: grid;
 grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-margin-left: 42%;
+
 box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
 `;
 
 const BoardDiv = styled.div`
-margin: 0 10% 0;
+max-width: 800px;
+min-width: 500px;
+background: #5e5c5c;
+padding: 0 5% 4% 5%;
+margin: 10%;
 `;
-
+const Instructions = styled.div`
+color:white;
+`;
 function Board() {
     const [allTiles, setAllTiles] = useState([1, 2, 3, 4, 5, 6, 7, 8,9]);
     const [startTime, setStartTime] = useState(new Date().getTime());
@@ -31,7 +36,6 @@ function Board() {
     },[]);
 
     const shiftTile = (index,label,isGrayItem)=>{
-        console.log('inside shifttile')
         setMoves(moves+1);
         if(!isGrayItem && checkTileMovability(index, grayItemIndex)){
             let currentTiles = allTiles;
@@ -49,15 +53,15 @@ function Board() {
             interval.current = null;
         }
             const newTiles = shuffle(allTiles);
-            const newTime = new Date().getTime();
             setAllTiles([ ...newTiles ]);
-            setStartTime(newTime);
+            setStartTime(new Date().getTime());
     }
 
     const startTimer = () => {
         if (!interval.current) {
             interval.current = setInterval(() => displayTime(), 1000)
         }
+        setStartTime(new Date().getTime());
     }
 
     const displayTime = () => {
@@ -80,6 +84,10 @@ function Board() {
         }
     }
 
+    const pauseGame = () =>{
+        // pause current time
+    };
+
     return (
         <BoardDiv>
             <Header moves={moves} reset={reset} time={time} startTimer={startTimer}></Header>
@@ -97,6 +105,14 @@ function Board() {
                     })
                 }
             </Tiles>
+            <Instructions>
+               <h4>Instructions:</h4> 
+               <ul>
+                   <li>Click on 'Play' button to start</li> 
+                   <li> Click on tile to move up/ down/ right/ left</li> 
+                   <li> Tile will move only if blank tile is nearby (up/ down/ right/ left)</li> 
+                </ul>
+            </Instructions>
         </BoardDiv>
     );
 }

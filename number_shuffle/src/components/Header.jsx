@@ -1,46 +1,45 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BsStopwatchFill, FaStop, FaPlay } from 'react-icons/all';
+import { BsStopwatchFill, FaPlay, FaPause, FaRedo } from 'react-icons/all';
 
 const HeaderSection = styled.div`
     margin: 20px;
     display: grid;
-    grid-template: repeat(1, 1fr)/repeat(4, 1fr);
-    width: 50%;
-    padding-left: 25%;
-    padding-right: 25%;
+    grid-template: repeat(1, 1fr)/repeat(3, 1fr);
+   
+    color:white;
 `;
-const Title = styled.div`
+const Title = styled.h1`
 text-align: center;
 font-weight: 700;
-font-size: large;
-padding: 10px;`;
+padding: 10px;
+color:white`;
 
 const Button = styled.button`
-width: 40%;
-padding: 4px;
+padding: 10px;
 border-radius: 4px;
-background-color: rgb(0, 119, 197);
-color: white;
-border: 1px solid rgb(0, 119, 197);
+background-color: #fca311;
+color: black;
+border: #fca311;
 cursor: pointer;
+&:hover {
+    transform: scaleY(1.2);
+}
 `;
 
-const StartBtn = styled(Button)`
-margin-left: 30%;
-`;
 
-function Header({ moves, reset, time, startTimer }) {
+function Header({ moves, reset, time, startTimer, pauseGame }) {
     
 
     return (
         <div>
             <Title> Arrange numbers in right order</Title>
             <HeaderSection>
-                <StartBtn onClick={() => startTimer()}><FaPlay></FaPlay></StartBtn>
-                <div>{<BsStopwatchFill></BsStopwatchFill>} {time}</div>
-                <div>Moves: {moves}</div>
-                <div> <Button onClick={() => reset()}><FaStop></FaStop></Button></div>
+                
+                <h3>{<BsStopwatchFill></BsStopwatchFill>} {time}</h3>
+                <h3>Moves: {moves}</h3>
+                <h3><Button onClick={() => startTimer()}><FaPlay></FaPlay> Play</Button> <Button onClick={() => reset()}><FaRedo></FaRedo> Reset</Button> </h3>
+                {/* <Button onClick={() => pauseGame()}><FaPause></FaPause></Button> */}
             </HeaderSection>
         </div>
 
